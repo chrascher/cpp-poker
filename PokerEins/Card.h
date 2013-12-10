@@ -18,7 +18,8 @@ using namespace std;
 	thre are 52 cards 
 	there are 4 colors
 	each color will have 2 to 10 and jack, queen, king ace as dedicated cards
-	for each color. so there are 13 cards per color 
+	for each color. so there are 13 cards per color
+    jetzt auch im GIT	
 */ 
 class Card {
 
@@ -27,7 +28,7 @@ public:
 				  DIAMOND,   // karo 
 				  HEARTS,     // herz
                   SPADE     // pick
-			   } ;
+			   };
 
    enum ValueE {TWO = 2, THREE, FOUR, FIVE,
                 SIX, SEVEN, EIGHT, NINE, TEN, 
@@ -36,9 +37,8 @@ public:
 
 private: 
    const unsigned cardUID; // unique cardID overall the cards; 
-   ColorE color;
-   ValueE value;
-
+   ColorE color;           // farbe der karte
+   ValueE value;           // wert der karte
 
 private: 
 	Card( ColorE col, ValueE val, unsigned cid) : color(col), value(val), cardUID(cid) {
