@@ -85,10 +85,12 @@
     <ClInclude Include="ComputerPlayer.h" />
     <ClInclude Include="Deck.h" />
     <ClInclude Include="Figure.h" />
-    <ClInclude Include="HandRanking.h" />
+    <ClInclude Include="HandRankingCGS.h" />
+    <ClInclude Include="HandRankingBase.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PokerApp.h" />
     <ClInclude Include="Pot.h" />
+    <ClInclude Include="RandomTools.h" />
     <ClInclude Include="RealPlayer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SingleBet.h" />

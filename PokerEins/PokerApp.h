@@ -10,8 +10,8 @@
 #include "RealPlayer.h" 
 #include "ComputerPlayer.h"
 #include "Pot.h" 
-#include "HandRanking.h"
-
+#include "HandRankingBase.h"
+#include "HandRankingCGS.h"
 
 using namespace std; 
 
@@ -60,7 +60,19 @@ public:
 		CardFactory factory;
 		factory.initializeCards( cards ) ; 
 
+		examplesForSortETC(); 
+
+	}
+
+	//
+	// example usage code only 
+	// comment out if not needed anymore 
+	//
+	void examplesForSortETC() {
+
+		//
 		// example for sorting the cards of POINTERS to really sort the objects not the pointer adresses 
+		//
 		// sort(cards.begin(), cards.end(), Card::PointerCompare() );
 
 
@@ -91,14 +103,13 @@ public:
 		// create and initialize Figures 
 
 		vector<Card * > hand ; 
-		hand.push_back( cards[1] );
-		hand.push_back( cards[2] );
-		hand.push_back( cards[3] );
+		hand.push_back( cards[11] );
+		hand.push_back( cards[12] );
+		hand.push_back( cards[13] );
 
-		HandRanking ranking(hand) ; 
+		HandRankingBase * ranking = new HandRankingCGS(hand) ; 
 
-		ranking.rankThisHand(); 
-
+		ranking->rankThisHand(); 
 	}
 
 

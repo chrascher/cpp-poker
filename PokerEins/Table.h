@@ -17,7 +17,7 @@ class PokerApp;
 */
 class Table {
 public: 
-		   enum BetRound {
+		enum BetRound {
 			      PRE_START = 0,     // status before game has even started
 				  PRE_FLOP = 1,      // game starts with pre flop
                   ON_FLOP  = 2,      // 3 cards visible
@@ -71,6 +71,17 @@ private:
 	void dealOneRoundOfCards(); 
 
 	void Table::tellThemNextRound(); 
+
+	void Table::doActionsForPlayers( BetRound round ) ; 
+
+	void Table::tablePrepareForPreFlopRound(); 
+
+	void Table::tablePrepareForOnFlop(); 
+
+	void Table::tablePrepareForOnTurn(); 
+
+	void Table::tablePrepareForOnRiver(); 
+
 
 };
 

@@ -64,12 +64,7 @@ void Table::tellThemNextRound() {
 }
 
 
-
-void Table::run()  {
-
-		// TODO :: button must be set to next button player
-		
-		tellThemNextRound(); 
+void Table::tablePrepareForPreFlopRound() {
 
 		// small blind will be forced to be set by player after button
 		unsigned int smallBlind = buttonPosition + 1 ;
@@ -83,64 +78,123 @@ void Table::run()  {
 		// each player gets 2 cards:
 		dealForTexasHoldem(); 
 
-		for( int i = PRE_FLOP; i <= ON_RIVER; i++ ) {
+}
 
+void Table::tablePrepareForOnFlop() {
+
+	// deal 3 community cards 
+}
+
+void Table::tablePrepareForOnTurn() {
+
+	// open next 4. card
+}
+
+void Table::tablePrepareForOnRiver() {
+
+	// open next 5. card 
+}
+
+
+
+void Table::run()  {
+
+		// TODO :: button must be set to next button player for next singleGame
+
+
+		for( int i = PRE_FLOP; i <= ON_RIVER; i++ ) {
 			this->currentRound = static_cast<BetRound>(i);
 
+			tellThemNextRound(); // and collect money 
 			// todo:
 			// 1. depending on bet round give 0 cardspre, then 3 cards, 1 card, or 1 card, or showdown
+			if( PRE_FLOP == currentRound) 
+				tablePrepareForPreFlopRound();
+			if( ON_FLOP == currentRound) 
+				tablePrepareForOnFlop();
+			if( ON_TURN == currentRound) 
+				tablePrepareForOnTurn();
+			if( ON_RIVER == currentRound) 
+				tablePrepareForOnRiver();
 
 			// 1.1. display action status on SCREEN (community cards + players active with tehre status and player-bet-size) 
 
 			// 2. now each player can perform its/his action 
-
-			int finalBetPos; // player which started this round, after big blind
-			                   // or he is the last raiser 
-			int currentPos; 
-
-			if ( i == PRE_FLOP ) {
-				finalBetPos = this->buttonPosition + 2 ; 
-
-			} else {
-				finalBetPos = this->buttonPosition ; 
-			}
-			currentPos = finalBetPos + 1 ; 
-
-			bool firstRound = true; 
-			// for( int playerX = 0; i <= 8 ; playerX++ ) {
-			while( currentPos != finalBetPos+1 || firstRound ) {
-				
-				firstRound = false; 
-
-				Player * currentPlayer = this->players.at(currentPos); 
-				// returns the action taken  == fold, call, raise, bet, all-in
-				
-				Actions action = currentPlayer-> playActionStep( this ); 
-
-				if(action == RAISE ) {
-					// current player has raised, mark him,
-					//  restart loop over players, so they can check, fold, raise also 
-					finalBetPos = currentPos != 0 ? currentPos-1 : 8 ; 
-				} 
-
-				currentPos ++; 
-				if(currentPos == 9) {
-					currentPos = 0; 
-				}
-			
-
-			} // end while 
+			doActionsForPlayers( currentRound ); 
 
 			// 3. after each player has done its things we must: 
 			//    check if there are more than 1 player still active, if only one he is the winner !
 
+
+		} // end for betrounds
+
+			// if there are more than one player left then check showdown
+
+			// this means compare best hand for each player 5 out of 7
+			// determine best overall hand == winner ! 
+
+} // end run 
+
+
+
+void Table::doActionsForPlayers( BetRound currentRound ) {
+
+	int finalBetPos; // player which started this round, after big blind
+			                   // or he is the last raiser 
+	int currentPos; 
+
+	if ( currentRound == PRE_FLOP ) {
+		finalBetPos = this->buttonPosition + 2 ; 
+	} else {
+		finalBetPos = this->buttonPosition ; 
+	}
+
+	currentPos = finalBetPos + 1 ; 
+
+	bool firstRound = true; 
+
+	// we start with minimum BET which was enforced by framework
+	unsigned int lastRaiseAmount = minimumBet;  
+
+
+	// for( int playerX = 0; i <= 8 ; playerX++ ) {
+	while( currentPos != finalBetPos+1 || firstRound ) {
+				
+		firstRound = false; 
+
+		Player * currentPlayer = this->players.at(currentPos); 
+		// returns the action taken  == fold, call, raise, bet, all-in
+				
+		Actions action = currentPlayer-> playActionStep( this ); 
+		if(action == RAISE ) {
+			// current player has raised, mark him,
+			// restart loop over players, so they can check, fold, raise also 
+			finalBetPos = currentPos != 0 ? currentPos-1 : 8; 
+
+			// CHECK if the player HAS really raised, and how much !! 
+		}
+		if(action == CALL ) {
+			// CHECK if the player has called correclty, which means added the amount necessary to equals the current BET/RAISE
+		}
+		if(action == CHECK) {
+			// check if the user is allowed to check. otherwise ... mhmmmm remove him from game ?? 
+		}
+		if(action == FOLD ) {
+			// can fold every time. 
+			// money will be collected after bet actions automatically with all other player pots 
+			cout << "User has Folded: " << currentPlayer->getPlayerId() << endl; 
 		}
 
-		// if there are more than one player left then check showdown
 
-		// this means compare best hand for each player 5 out of 7
-		// determine best overall hand == winner ! 
+		currentPos ++; 
+		if(currentPos == 9) {
+			currentPos = 0; 
+		}
 
-
+	} // end while 
 
 }
+
+
+
+

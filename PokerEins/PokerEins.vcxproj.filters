@@ -69,7 +69,13 @@
     <ClInclude Include="resource.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="HandRanking.h">
+    <ClInclude Include="HandRankingBase.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="HandRankingCGS.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomTools.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
