@@ -11,5 +11,8 @@ public:
 	}
 
 	~ComputerPlayer(void);
+	
+	void npcRaise(){}
+	void test(){}
 };
 
