@@ -87,6 +87,8 @@
     <ClInclude Include="Figure.h" />
     <ClInclude Include="HandRankingCGS.h" />
     <ClInclude Include="HandRankingBase.h" />
+    <ClInclude Include="HandRankingPeda.h" />
+    <ClInclude Include="HandViewPeda.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PokerApp.h" />
     <ClInclude Include="Pot.h" />

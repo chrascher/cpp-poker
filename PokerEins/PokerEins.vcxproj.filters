@@ -78,6 +78,12 @@
     <ClInclude Include="RandomTools.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="HandRankingPeda.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="HandViewPeda.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

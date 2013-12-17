@@ -43,22 +43,37 @@ private:
 
 	SingleBet * singleBet;  // current bet per round (stake, wager)
 
-	playerStatus gameStatus; 
-
+	// only for test !!! 
 	bool doRase ; 
 
-public:
+protected: 
+	playerStatus gameStatus; 
 
+
+private: 
 	Player() {
 		doRase = false; 
 		singleBet = NULL; 
 	}
 
+public:
+
 	Player(string playerIdIn) : gameStatus(PS_ACTIVE) {
 		playerID = playerIdIn; 
 		doRase = false; 
 		singleBet = NULL; 
+		
+		coinStack.addCoins(200); 
 	}
+
+	playerStatus getPlayerStatus() {
+		return this->gameStatus; 
+	}
+
+	vector<Card *> getPocketCards() {
+		return this->pocketCards; 
+	}
+
 
 	void setRaise() {
 		doRase = true; 
@@ -81,19 +96,12 @@ public:
 	// IF call then add difference to your single Bet pot
 	// IF you RAISE then add call diference AND addtional RAISE amount to singleBet amount 
 	// return only your action, table will check your single-Bet Pot automatically 
-	Actions playActionStep( Table * table ); 
+	
+	virtual Actions playActionStep( Table * table ) = 0 ; 
 
 
 	// get a card from dealer during deal
 	void receiveCard( Card * card ); 
-
-	// table will call this for the small and big blind players, 
-	// providing the correct values already ! 
-	void makeBlind(unsigned blindValue ) {
-		this->coinStack.removeCoins(blindValue);
-
-		this->singleBet->addCoins(blindValue); 
-	}
 
 	// Table dealer will call restet bet pot bevore each bet-round
 	// TABLE dealer MUST delete the Single bet when not needed anymore 
@@ -107,6 +115,26 @@ public:
 		return singleBet; 
 	}
 
+
+	// table will call this for the small and big blind players, 
+	// providing the correct values already ! 
+	void makeBlind(unsigned blindValue ) {
+
+		betCoins(blindValue); 
+
+	}
+
+protected:
+
+	void betCoins(unsigned coins ) {
+		
+		if(coins > coinStack.getCoins() ) {
+			throw "Invalid Amount of coins to bet" ; 
+		}
+
+		this->coinStack.removeCoins(coins);
+		this->singleBet->addCoins(coins); 
+	}
 
 
 };

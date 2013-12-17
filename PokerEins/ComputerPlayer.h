@@ -14,5 +14,9 @@ public:
 	
 	void npcRaise(){}
 	void test(){}
+
+
+	// virtual see player 
+	Actions playActionStep( Table * table ) ;
 };
 

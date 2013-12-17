@@ -22,7 +22,8 @@ public:
 				  PRE_FLOP = 1,      // game starts with pre flop
                   ON_FLOP  = 2,      // 3 cards visible
 				  ON_TURN  = 3,      // +1 card == 4 cards
-				  ON_RIVER = 4      // +1 card == 5 cards  
+				  ON_RIVER = 4,      // +1 card == 5 cards  
+				  SHOWDOWN = 5       // show the Hands, display the Winner and earn the Pot  
 			   } ;
 
 private:    
@@ -44,7 +45,12 @@ private:
 
 	vector<Card *> communityCards; // should be 0, 3, 4 or 5 ; encapsulate in class if required 
 
+	vector<Card *> burnedCards; // collects the 3 burned Cards
+
 	int buttonPosition; 
+
+	// poistion of game player which has last raised and will not asked for action again 
+	int stepOutBetRoundPos; // instead of finalBetPos to prevent overflow (0-1)
 
 
 public:
@@ -64,23 +70,38 @@ public:
 
 	void run(); 
 
+	// Player * getLastRaisedPlayer() ; 
+
+	//
+	unsigned int getLastRaisedAmount() {
+		Player * player =  players.at(this->stepOutBetRoundPos);
+		SingleBet * pot = player->getSingleBetPot (); 
+		return pot->getCoins(); 
+	}
+
 
 private: 
 	void dealForTexasHoldem() ;
 
-	void dealOneRoundOfCards(); 
+	void dealPocketCards(); 
+
+	void dealCommunityCards(); 
 
 	void Table::tellThemNextRound(); 
 
 	void Table::doActionsForPlayers( BetRound round ) ; 
 
-	void Table::tablePrepareForPreFlopRound(); 
+	void Table::tablePrepareForPreStart(); 
+
+	void Table::tablePrepareForPreFlop(); 
 
 	void Table::tablePrepareForOnFlop(); 
 
 	void Table::tablePrepareForOnTurn(); 
 
 	void Table::tablePrepareForOnRiver(); 
+
+	void Table::tablePrepareForShowdown();
 
 
 };

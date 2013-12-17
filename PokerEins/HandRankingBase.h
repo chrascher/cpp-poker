@@ -86,5 +86,14 @@ public:
 		return resultHand; 
 	}
 
+
+   // if we have vectors of pointers we need an operator which compares the objects 
+   // instead of the pointers 
+   struct PointerCompare {
+	   bool operator()(const HandRankingBase* l, const HandRankingBase* r) {
+			return *l < *r;
+		  }
+		};
+
 };
 

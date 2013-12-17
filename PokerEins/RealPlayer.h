@@ -28,5 +28,10 @@ public:
 		return getPlayerId();
 	}
 
+
+	// virtual see player 
+	Actions RealPlayer::playActionStep( Table * table ); 
+
+
 };
 
